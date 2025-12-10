@@ -23,7 +23,7 @@ export default class AdminForthAdapterTwitchOauth2 implements OAuth2Adapter {
     return `https://id.twitch.tv/oauth2/authorize?${params.toString()}`;
   }
 
-  async getTokenFromCode(code: string, redirect_uri: string): Promise<{ email: string }> {
+  async getTokenFromCode(code: string, redirect_uri: string): Promise<{ email: string, profilePictureUrl: string, fullName: string }> {
     const tokenRes = await fetch('https://id.twitch.tv/oauth2/token', {
       method: 'POST',
       headers: {
@@ -63,6 +63,8 @@ export default class AdminForthAdapterTwitchOauth2 implements OAuth2Adapter {
 
     return {
       email: user.email,
+      profilePictureUrl: user.profile_image_url,
+      fullName: user.display_name
     };
   }
 
